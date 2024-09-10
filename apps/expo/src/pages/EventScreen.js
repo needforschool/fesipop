@@ -13,7 +13,6 @@ const EventScreen = () => {
                     showsVerticalScrollIndicator={false}
                 >
                     <Text style={styles.headerText}>EVENEMENTS</Text>
-                    {/* Génère plusieurs cartes d'événements */}
                     {Array(7).fill(0).map((_, index) => (
                         <EventCard
                             key={index}
