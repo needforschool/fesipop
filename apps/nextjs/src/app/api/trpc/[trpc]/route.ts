@@ -3,7 +3,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter, createTRPCContext } from "@acme/api";
 import { auth } from "@acme/auth";
 
-export const runtime = "edge";
+export const runtime = process.env.NODE_ENV === "development" ? "nodejs" : "edge";
 
 /**
  * Configure basic CORS headers
