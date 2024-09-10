@@ -11,33 +11,19 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const Post = pgTable("post", {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
-  title: varchar("name", { length: 256 }).notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", {
-    mode: "date",
-    withTimezone: true,
-  }).$onUpdateFn(() => sql`now()`),
-});
-
-export const CreatePostSchema = createInsertSchema(Post, {
-  title: z.string().max(256),
-  content: z.string().max(256),
-}).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const events = pgTable('events', {
+export const Event = pgTable('event', {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
   title: text('title').notNull(),
   description: text('description'),
-  date: timestamp('date').notNull(),
-  time: text('time').notNull(),
-  locationId: integer('location_id').references(() => Location.id),
+  startAt: timestamp('start_at').notNull(),
+  // locationId: integer('location_id').references(() => Location.id),
+});
+
+export const CreateEventSchema = createInsertSchema(Event, {
+  title: z.string().max(256),
+  description: z.string().max(256),
+}).omit({
+  id: true,
 });
 
 export const Location = pgTable('location', {
@@ -54,11 +40,11 @@ export const Artist = pgTable('artist', {
 });
 
 export const ArtistRelations = relations(Artist, ({ many }) => ({
-  events: many(events),
+  events: many(Event),
 }));
 
 export const LocationRelations = relations(Location, ({ many }) => ({
-  events: many(events),
+  events: many(Event),
 }));
 
 export const User = pgTable("user", {

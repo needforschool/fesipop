@@ -1,7 +1,7 @@
 "use client";
 
 import type { RouterOutputs } from "@acme/api";
-import { CreatePostSchema } from "@acme/db/schema";
+import { CreateEventSchema } from "@acme/db/schema";
 import { cn } from "@acme/ui";
 import { Button } from "@acme/ui/button";
 import {
@@ -19,24 +19,24 @@ import { api } from "~/trpc/react";
 
 export function CreatePostForm() {
   const form = useForm({
-    schema: CreatePostSchema,
+    schema: CreateEventSchema,
     defaultValues: {
-      content: "",
       title: "",
+      description: "",
     },
   });
 
   const utils = api.useUtils();
-  const createPost = api.post.create.useMutation({
+  const createEvent = api.event.create.useMutation({
     onSuccess: async () => {
       form.reset();
-      await utils.post.invalidate();
+      await utils.event.invalidate();
     },
     onError: (err) => {
       toast.error(
         err.data?.code === "UNAUTHORIZED"
-          ? "You must be logged in to post"
-          : "Failed to create post",
+          ? "You must be logged in to event"
+          : "Failed to create event",
       );
     },
   });
@@ -46,7 +46,7 @@ export function CreatePostForm() {
       <form
         className="flex w-full max-w-2xl flex-col gap-4"
         onSubmit={form.handleSubmit((data) => {
-          createPost.mutate(data);
+          createEvent.mutate(data);
         })}
       >
         <FormField
@@ -63,11 +63,11 @@ export function CreatePostForm() {
         />
         <FormField
           control={form.control}
-          name="content"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} placeholder="Content" />
+                <Input {...field} placeholder="Description" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,15 +79,15 @@ export function CreatePostForm() {
   );
 }
 
-export function PostList() {
-  const [posts] = api.post.all.useSuspenseQuery();
+export function EventList() {
+  const [events] = api.event.all.useSuspenseQuery();
 
-  if (posts.length === 0) {
+  if (events.length === 0) {
     return (
       <div className="relative flex w-full flex-col gap-4">
-        <PostCardSkeleton pulse={false} />
-        <PostCardSkeleton pulse={false} />
-        <PostCardSkeleton pulse={false} />
+        <EventCardSkeleton pulse={false} />
+        <EventCardSkeleton pulse={false} />
+        <EventCardSkeleton pulse={false} />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10">
           <p className="text-2xl font-bold text-white">No posts yet</p>
@@ -98,26 +98,26 @@ export function PostList() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {posts.map((p) => {
-        return <PostCard key={p.id} post={p} />;
+      {events.map((e) => {
+        return <EventCard key={e.id} post={e} />;
       })}
     </div>
   );
 }
 
-export function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
+export function EventCard(props: {
+  event: RouterOutputs["event"]["all"][number];
 }) {
   const utils = api.useUtils();
-  const deletePost = api.post.delete.useMutation({
+  const deletePost = api.event.delete.useMutation({
     onSuccess: async () => {
-      await utils.post.invalidate();
+      await utils.event.invalidate();
     },
     onError: (err) => {
       toast.error(
         err.data?.code === "UNAUTHORIZED"
-          ? "You must be logged in to delete a post"
-          : "Failed to delete post",
+          ? "You must be logged in to delete a event"
+          : "Failed to delete event",
       );
     },
   });
@@ -125,14 +125,14 @@ export function PostCard(props: {
   return (
     <div className="flex flex-row rounded-lg bg-muted p-4">
       <div className="flex-grow">
-        <h2 className="text-2xl font-bold text-primary">{props.post.title}</h2>
-        <p className="mt-2 text-sm">{props.post.content}</p>
+        <h2 className="text-2xl font-bold text-primary">{props.event.title}</h2>
+        <p className="mt-2 text-sm">{props.event.description}</p>
       </div>
       <div>
         <Button
           variant="ghost"
           className="cursor-pointer text-sm font-bold uppercase text-primary hover:bg-transparent hover:text-white"
-          onClick={() => deletePost.mutate(props.post.id)}
+          onClick={() => deletePost.mutate(props.event.id)}
         >
           Delete
         </Button>
@@ -141,7 +141,7 @@ export function PostCard(props: {
   );
 }
 
-export function PostCardSkeleton(props: { pulse?: boolean }) {
+export function EventCardSkeleton(props: { pulse?: boolean }) {
   const { pulse = true } = props;
   return (
     <div className="flex flex-row rounded-lg bg-muted p-4">
