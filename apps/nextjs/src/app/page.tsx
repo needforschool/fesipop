@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, MapPin, Music, Ticket } from "lucide-react";
+import { MapPin, Music, Ticket } from "lucide-react";
 
 import { Button } from "@acme/ui/button";
 import {
