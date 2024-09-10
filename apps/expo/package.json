@@ -17,10 +17,9 @@
   "dependencies": {
     "@bacons/text-decoder": "^0.0.0",
     "@expo/metro-config": "^0.18.11",
-    "@shopify/flash-list": "1.7.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
-    "@shopify/flash-list": "1.6.4",
+    "@shopify/flash-list": "1.7.1",
     "@tanstack/react-query": "catalog:",
     "@trpc/client": "catalog:",
     "@trpc/react-query": "catalog:",
