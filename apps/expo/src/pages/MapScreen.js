@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import * as Location from 'expo-location';
 
 const MapScreen = () => {
     const [region, setRegion] = useState({
@@ -15,57 +15,29 @@ const MapScreen = () => {
 
     useEffect(() => {
         const getLocation = async () => {
-            // Vérifier la permission
-            const permission = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            // Demander la permission
+            const { status } = await Location.requestForegroundPermissionsAsync();
 
-            if (permission === RESULTS.GRANTED) {
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        setUserLocation({
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                        });
-                        setRegion({
-                            ...region,
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                        });
-                        setLoading(false);
-                    },
-                    error => {
-                        console.log(error);
-                        setLoading(false);
-                    },
-                    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-                );
+            if (status === 'granted') {
+                // Obtenir la position
+                const location = await Location.getCurrentPositionAsync({
+                    enableHighAccuracy: true,
+                    timeout: 20000,
+                    maximumAge: 1000,
+                });
+                setUserLocation({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                });
+                setRegion({
+                    ...region,
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                });
+                setLoading(false);
             } else {
-                // Demander la permission si elle n'est pas accordée
-                const newPermission = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-                if (newPermission === RESULTS.GRANTED) {
-                    // Réessayer d'obtenir la position
-                    navigator.geolocation.getCurrentPosition(
-                        position => {
-                            setUserLocation({
-                                latitude: position.coords.latitude,
-                                longitude: position.coords.longitude,
-                            });
-                            setRegion({
-                                ...region,
-                                latitude: position.coords.latitude,
-                                longitude: position.coords.longitude,
-                            });
-                            setLoading(false);
-                        },
-                        error => {
-                            console.log(error);
-                            setLoading(false);
-                        },
-                        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-                    );
-                } else {
-                    // La permission est toujours refusée
-                    setLoading(false);
-                }
+                // Permission refusée
+                setLoading(false);
             }
         };
 
