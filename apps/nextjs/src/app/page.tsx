@@ -12,6 +12,8 @@ import {
 } from "@acme/ui/card";
 import { Input } from "@acme/ui/input";
 
+import ArtistCards from "./_components/ArtistCards";
+
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -48,16 +50,16 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
-        <section className="w-full bg-black py-12 text-white md:py-24 lg:py-32 xl:py-48">
+        <section className="w-full bg-[#1B1464] py-12 text-white md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Experience the Ultimate Festival
+                <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  FESIPOP
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-300 md:text-xl">
-                  Join us for three days of incredible music, art, and
-                  community. Get ready for the event of the year!
+                  Bienvenue au Fesipop, le festival 100% K-pop, qui débarque en
+                  France !
                 </p>
               </div>
               <div className="space-x-4">
@@ -67,7 +69,7 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="w-full bg-gray-100 py-12 md:py-24 lg:py-32">
+        <section className="w-full bg-[#12CBC4] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-5xl">
               Festival Features
@@ -108,27 +110,11 @@ export default function LandingPage() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-5xl">
-              Featured Artists
+              Line up
             </h2>
-            <div className="grid gap-6 lg:grid-cols-4">
-              {[1, 2, 3, 4].map((i) => (
-                <Card key={i}>
-                  <CardContent className="p-4">
-                    <Image
-                      alt={`Artist ${i}`}
-                      className="mb-4 aspect-square w-full rounded-lg object-cover"
-                      height="400"
-                      src={`/placeholder.svg?height=400&width=400`}
-                      width="400"
-                    />
-                    <h3 className="mb-2 text-lg font-bold">Artist Name</h3>
-                    <p className="text-sm text-gray-500">Genre</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <ArtistCards />
             <div className="mt-10 text-center">
-              <Button>View Full Lineup</Button>
+              <Button>Voir la programmation complète</Button>
             </div>
           </div>
         </section>
