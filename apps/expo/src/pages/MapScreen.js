@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
@@ -56,11 +56,7 @@ const MapScreen = () => {
         <View style={styles.container}>
             <MapView
                 style={styles.map}
-                region={{
-                    ...region,
-                    latitudeDelta: 0.05,
-                    longitudeDelta: 0.05,
-                }}
+                initialRegion={region}
                 onRegionChangeComplete={setRegion}
             >
                 {userLocation && (
@@ -68,7 +64,7 @@ const MapScreen = () => {
                         coordinate={userLocation}
                         title="Votre position actuelle"
                         description="Vous êtes ici"
-                        pinColor="blue" // Couleur du marqueur
+                        pinColor="blue"
                     />
                 )}
             </MapView>
