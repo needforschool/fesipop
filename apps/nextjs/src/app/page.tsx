@@ -50,11 +50,11 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
-        <section className="w-full bg-[#1B1464] py-12 text-white md:py-24 lg:py-32 xl:py-48">
+        <section className="xl:py-58 w-full bg-[#1B1464] py-12 text-white md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                <h1 className="text-4xl font-bold tracking-tighter tracking-widest sm:text-5xl md:text-6xl lg:text-7xl/none">
                   FESIPOP
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-300 md:text-xl">
@@ -63,54 +63,16 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>Get Tickets</Button>
-                <Button variant="outline">View Lineup</Button>
+                <Button>Obtenez vos billets</Button>
+                <Button variant="outline">Voir la LINE UP</Button>
               </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full bg-[#12CBC4] py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-5xl">
-              Festival Features
-            </h2>
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
-              <Card>
-                <CardHeader>
-                  <Music className="mb-2 h-8 w-8" />
-                  <CardTitle>Multiple Stages</CardTitle>
-                  <CardDescription>
-                    Experience diverse music genres across our specially curated
-                    stages.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <MapPin className="mb-2 h-8 w-8" />
-                  <CardTitle>Prime Location</CardTitle>
-                  <CardDescription>
-                    Set in a beautiful landscape with easy access and ample
-                    facilities.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Ticket className="mb-2 h-8 w-8" />
-                  <CardTitle>Easy Ticketing</CardTitle>
-                  <CardDescription>
-                    Secure your spot with our simple and fast ticketing system.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
             </div>
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-5xl">
-              Line up
+              Line up !
             </h2>
             <ArtistCards />
             <div className="mt-10 text-center">
@@ -118,28 +80,118 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="w-full bg-gray-100 py-12 md:py-24 lg:py-32">
+        <section className="w-full bg-pink-900 py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Stay Updated
-                </h2>
-                <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Subscribe to our newsletter for the latest festival news and
-                  exclusive offers.
-                </p>
-              </div>
-              <div className="w-full max-w-sm space-y-2">
-                <form className="flex space-x-2">
-                  <Input
-                    className="max-w-lg flex-1"
-                    placeholder="Enter your email"
-                    type="email"
-                  />
-                  <Button type="submit">Subscribe</Button>
-                </form>
-              </div>
+            <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-5xl">
+              La vie du festival
+            </h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <a href="#" className="group relative block bg-black">
+                <Image
+                  alt="bar"
+                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                  height="1000"
+                  src="/bar.jpg"
+                  width="1000"
+                />
+                <div className="relative p-4 sm:p-6 lg:p-8">
+                  <p className="text-2xl font-medium uppercase tracking-widest text-pink-200">
+                    Notre Nouveau FESIBAR
+                  </p>
+
+                  <p className="text-xl font-bold text-white sm:text-2xl"></p>
+
+                  <div className="mt-32 sm:mt-48 lg:mt-64">
+                    <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <p className="text-sm text-white">
+                        Profitez de notre nouveau bar situé à côté de la scène
+                        principale. Dégustez une sélection de cocktails,
+                        mocktails et bières. Tout cela vous attend !
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="#" className="group relative block bg-black">
+                <Image
+                  alt="bar"
+                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                  height="1000"
+                  src="/camping.jpg"
+                  width="1000"
+                />
+                <div className="relative p-4 sm:p-6 lg:p-8">
+                  <p className="text-2xl font-medium uppercase tracking-widest text-pink-200">
+                    Le Camping
+                  </p>
+
+                  <p className="text-xl font-bold text-white sm:text-2xl"></p>
+
+                  <div className="mt-32 sm:mt-48 lg:mt-64">
+                    <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <p className="text-sm text-white">
+                        Profitez de plus de 5000 m² de camping à côté des
+                        entrées du festival. Des animations et des cadeaux sont
+                        prévus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div className="my-6 grid gap-6 lg:grid-cols-2">
+              <a href="#" className="group relative block bg-black">
+                <Image
+                  alt="bar"
+                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                  height="1000"
+                  src="/scene.jpg"
+                  width="1000"
+                />
+                <div className="relative p-4 sm:p-6 lg:p-8">
+                  <p className="text-2xl font-medium uppercase tracking-widest text-pink-200">
+                    La nouvelle scène K-STAR
+                  </p>
+
+                  <p className="text-xl font-bold text-white sm:text-2xl"></p>
+
+                  <div className="mt-32 sm:mt-48 lg:mt-64">
+                    <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <p className="text-sm text-white">
+                        Profitez de notre nouveau bar situé à côté de la scène
+                        principale. Dégustez une sélection de cocktails,
+                        mocktails et bières. Tout cela vous attend !
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="#" className="group relative block bg-black">
+                <Image
+                  alt="bar"
+                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                  height="1000"
+                  src="/camping.jpg"
+                  width="1000"
+                />
+                <div className="relative p-4 sm:p-6 lg:p-8">
+                  <p className="text-2xl font-medium uppercase tracking-widest text-pink-200">
+                    Prévention
+                  </p>
+
+                  <p className="text-xl font-bold text-white sm:text-2xl"></p>
+
+                  <div className="mt-32 sm:mt-48 lg:mt-64">
+                    <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <p className="text-sm text-white">
+                        Profitez de plus de 5000 m² de camping à côté des
+                        entrées du festival. Des animations et des cadeaux sont
+                        prévus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </section>
