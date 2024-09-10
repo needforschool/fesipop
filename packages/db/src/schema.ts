@@ -31,6 +31,36 @@ export const CreatePostSchema = createInsertSchema(Post, {
   updatedAt: true,
 });
 
+export const events = pgTable('events', {
+  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  description: text('description'),
+  date: timestamp('date').notNull(),
+  time: text('time').notNull(),
+  locationId: integer('location_id').references(() => Location.id),
+});
+
+export const Location = pgTable('location', {
+  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  latitude: text('latitude').notNull(),
+  longitude: text('longitude').notNull(),
+});
+
+export const Artist = pgTable('artist', {
+  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  genre: text('genre'),
+});
+
+export const ArtistRelations = relations(Artist, ({ many }) => ({
+  events: many(events),
+}));
+
+export const LocationRelations = relations(Location, ({ many }) => ({
+  events: many(events),
+}));
+
 export const User = pgTable("user", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
   name: varchar("name", { length: 255 }),
