@@ -6,7 +6,7 @@ import {
   CreatePostForm,
   EventCardSkeleton,
   EventList,
-} from "../_components/posts";
+} from "../_components/events";
 
 export default function HomePage() {
   // You can await this here if you don't want to show Suspense fallback below

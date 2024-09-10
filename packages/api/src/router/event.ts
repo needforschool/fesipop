@@ -31,7 +31,12 @@ export const eventRouter = {
   create: protectedProcedure
     .input(CreateEventSchema)
     .mutation(({ ctx, input }) => {
-      return ctx.db.insert(Event).values(input);
+      const { location_x, location_y, ...otherFields } = input;
+      return ctx.db.insert(Event).values({
+        ...otherFields,
+        location_x: location_x.toString(),
+        location_y: location_y.toString(),
+      });
     }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {

@@ -1,6 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   integer,
+  numeric,
   pgTable,
   primaryKey,
   text,
@@ -14,23 +15,20 @@ import { z } from "zod";
 export const Event = pgTable('event', {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
   title: text('title').notNull(),
-  description: text('description'),
+  description: text('description').notNull(),
   startAt: timestamp('start_at').notNull(),
-  // locationId: integer('location_id').references(() => Location.id),
+  location_x: numeric('location_x').notNull(),
+  location_y: numeric('location_y').notNull(),
 });
 
 export const CreateEventSchema = createInsertSchema(Event, {
   title: z.string().max(256),
   description: z.string().max(256),
+  startAt: z.date(),
+  location_x: z.number(),
+  location_y: z.number(),
 }).omit({
   id: true,
-});
-
-export const Location = pgTable('location', {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
-  name: text('name').notNull(),
-  latitude: text('latitude').notNull(),
-  longitude: text('longitude').notNull(),
 });
 
 export const Artist = pgTable('artist', {
@@ -40,10 +38,6 @@ export const Artist = pgTable('artist', {
 });
 
 export const ArtistRelations = relations(Artist, ({ many }) => ({
-  events: many(Event),
-}));
-
-export const LocationRelations = relations(Location, ({ many }) => ({
   events: many(Event),
 }));
 
