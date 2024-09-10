@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { View, StyleSheet, ActivityIndicator, Image, Modal, Text, TouchableOpacity } from 'react-native';
+import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
+import CustomMarker from '../../src/component/CustomMarker';
+
+// Image personnalisée
+const PopupImage = require('../../assets/logo.png');
 
 const MapScreen = () => {
     const [region, setRegion] = useState({
@@ -12,41 +16,41 @@ const MapScreen = () => {
     });
     const [userLocation, setUserLocation] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [selectedMarker, setSelectedMarker] = useState(null); // État pour gérer la sélection du marqueur
 
     useEffect(() => {
         const getLocation = async () => {
-            // Demander la permission
             const { status } = await Location.requestForegroundPermissionsAsync();
-
             if (status === 'granted') {
-                // Obtenir la position
                 const location = await Location.getCurrentPositionAsync({
                     enableHighAccuracy: true,
                     timeout: 20000,
                     maximumAge: 1000,
                 });
-                setUserLocation({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                });
-                setRegion({
-                    ...region,
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                });
-                setLoading(false);
-            } else {
-                // Permission refusée
-                setLoading(false);
+                const { latitude, longitude } = location.coords;
+                setUserLocation({ latitude, longitude });
+                setRegion((prevRegion) => ({
+                    ...prevRegion,
+                    latitude,
+                    longitude,
+                }));
             }
+            setLoading(false);
         };
-
         getLocation();
     }, []);
 
+    const handleMarkerPress = (markerData) => {
+        setSelectedMarker(markerData); // Mettre à jour l'état avec les informations du marqueur sélectionné
+    };
+
+    const closeModal = () => {
+        setSelectedMarker(null); // Fermer la modale
+    };
+
     if (loading) {
         return (
-            <View style={styles.container}>
+            <View style={styles.loadingContainer}>
                 <ActivityIndicator size="large" color="#0000ff" />
             </View>
         );
@@ -60,14 +64,70 @@ const MapScreen = () => {
                 onRegionChangeComplete={setRegion}
             >
                 {userLocation && (
-                    <Marker
+                    <CustomMarker
                         coordinate={userLocation}
                         title="Votre position actuelle"
                         description="Vous êtes ici"
                         pinColor="blue"
+                        onPress={() => handleMarkerPress({
+                            title: "Votre position actuelle",
+                            description: "Vous êtes ici",
+                            image: null,
+                        })}
                     />
                 )}
+
+                <CustomMarker
+                    coordinate={{
+                        latitude: 49.44709008859785,
+                        longitude: 1.1042816721797788,
+                    }}
+                    title="Exo"
+                    description="Kpop"
+                    onPress={() => handleMarkerPress({
+                        title: "Exo",
+                        description: "Heures : 17h",
+                        image: PopupImage,
+                    })}
+                />
+
+                <CustomMarker
+                    coordinate={{
+                        latitude: 65.44709008859785,
+                        longitude: 1.1042816721797788,
+                    }}
+                    title="Poab"
+                    description="Kpop"
+                    onPress={() => handleMarkerPress({
+                        title: "Poab",
+                        description: "Heures : 18h",
+                        image: PopupImage,
+                    })}
+                />
             </MapView>
+
+            {selectedMarker && (
+                <Modal
+                    transparent={true}
+                    animationType="slide"
+                    visible={!!selectedMarker}
+                    onRequestClose={closeModal}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            {/* Image au-dessus du titre */}
+                            {selectedMarker.image && (
+                                <Image source={selectedMarker.image} style={styles.modalImage} />
+                            )}
+                            <Text style={styles.modalTitle}>{selectedMarker.title}</Text>
+                            <Text style={styles.modalDescription}>{selectedMarker.description}</Text>
+                            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                                <Text style={styles.closeButtonText}>Fermer</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            )}
         </View>
     );
 };
@@ -80,5 +140,47 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        width: 300,
+        padding: 10,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalDescription: {
+        fontSize: 16,
+        marginBottom: 20,
+    },
+    modalImage: {
+        width: 150,
+        height: 150,
+        marginBottom: 10,
+        resizeMode: 'contain',
+    },
+    closeButton: {
+        backgroundColor: '#1B1464',
+        padding: 10,
+        borderRadius: 5,
+    },
+    closeButtonText: {
+        color: 'white',
+        fontSize: 16,
     },
 });
