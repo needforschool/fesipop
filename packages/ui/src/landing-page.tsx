@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, MapPin, Music, Ticket } from "lucide-react";
@@ -12,7 +14,7 @@ import {
 } from "@acme/ui/card";
 import { Input } from "@acme/ui/input";
 
-export default function LandingPage() {
+export function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex h-14 items-center px-4 lg:px-6">
