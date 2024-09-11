@@ -1,15 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, MapPin, Music, Ticket } from "lucide-react";
+import { MapPin, Music, Ticket } from "lucide-react";
 
 import { Button } from "@acme/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@acme/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@acme/ui/card";
 import { Input } from "@acme/ui/input";
 
 import ArtistCards from "./_components/ArtistCards";
