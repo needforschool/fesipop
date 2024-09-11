@@ -6,6 +6,8 @@ import CustomMarker from '../../src/component/CustomMarker';
 
 // Image personnalisée
 const PopupImage = require('../../assets/logo.png');
+const UserImagePin = require('../../assets/userPin.png');
+const LocationImagePin = require('../../assets/locationPin.png');
 
 const MapScreen = () => {
     const [region, setRegion] = useState({
@@ -68,7 +70,9 @@ const MapScreen = () => {
                         coordinate={userLocation}
                         title="Votre position actuelle"
                         description="Vous êtes ici"
-                        pinColor="blue"
+                        height={45}
+                        width={45}
+                        pinImage={UserImagePin}
                         onPress={() => handleMarkerPress({
                             title: "Votre position actuelle",
                             description: "Vous êtes ici",
@@ -84,6 +88,9 @@ const MapScreen = () => {
                     }}
                     title="Exo"
                     description="Kpop"
+                    pinImage={LocationImagePin}
+                    height={35}
+                    width={35}
                     onPress={() => handleMarkerPress({
                         title: "Exo",
                         description: "Heures : 17h",
@@ -93,11 +100,14 @@ const MapScreen = () => {
 
                 <CustomMarker
                     coordinate={{
-                        latitude: 65.44709008859785,
-                        longitude: 1.1042816721797788,
+                        latitude: 49.442804165962286,
+                        longitude: 1.0926350343166913,
                     }}
                     title="Poab"
                     description="Kpop"
+                    pinImage={LocationImagePin}
+                    height={35}
+                    width={35}
                     onPress={() => handleMarkerPress({
                         title: "Poab",
                         description: "Heures : 18h",
