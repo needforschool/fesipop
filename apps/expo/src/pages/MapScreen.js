@@ -7,7 +7,23 @@ import CustomMarker from '../../src/component/CustomMarker';
 // Image personnalisée
 const PopupImage = require('../../assets/logo.png');
 const UserImagePin = require('../../assets/userPin.png');
-const LocationImagePin = require('../../assets/locationPin.png');
+const LocationImagePin = require('../../assets/locationpin.png');
+
+const markersData = [
+    {
+        coordinate: { latitude: 49.44709008859785, longitude: 1.1042816721797788 },
+        title: "Exo",
+        description: "Heures : 17h",
+        image: PopupImage,
+    },
+    {
+        coordinate: { latitude: 49.442804165962286, longitude: 1.0926350343166913 },
+        title: "Poab",
+        description: "Heures : 18h",
+        image: PopupImage,
+    },
+    // Ajoutez d'autres marqueurs ici si nécessaire
+];
 
 const MapScreen = () => {
     const [region, setRegion] = useState({
@@ -18,7 +34,9 @@ const MapScreen = () => {
     });
     const [userLocation, setUserLocation] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [selectedMarker, setSelectedMarker] = useState(null); // État pour gérer la sélection du marqueur
+    const [selectedMarker, setSelectedMarker] = useState(null);
+    const [zoomedOut, setZoomedOut] = useState(false); // État pour savoir si on est dézoomé
+    const [visibleMarkers, setVisibleMarkers] = useState(markersData); // Liste des marqueurs visibles
 
     useEffect(() => {
         const getLocation = async () => {
@@ -50,6 +68,33 @@ const MapScreen = () => {
         setSelectedMarker(null); // Fermer la modale
     };
 
+    // Vérifier le zoom lorsque la région change et ajuster les marqueurs visibles
+    const handleRegionChangeComplete = (newRegion) => {
+        setRegion(newRegion);
+
+        // Déterminer si on doit afficher les pins ou non en fonction du zoom
+        const zoomOutThreshold = 0.1; // Seuil pour décider quand afficher un groupe de pins
+        if (newRegion.latitudeDelta > zoomOutThreshold || newRegion.longitudeDelta > zoomOutThreshold) {
+            setZoomedOut(true);
+
+            // Si la carte est dézoomée, regrouper tous les marqueurs visibles dans un seul
+            const totalMarkers = markersData.length;
+            setVisibleMarkers([{
+                coordinate: {
+                    latitude: 49.444, // Choisissez une coordonnée centrale pour le marqueur regroupé
+                    longitude: 1.1,
+                },
+                title: `${totalMarkers} événements`,
+                description: "Cliquez pour voir plus d'événements",
+                image: null, // Pas d'image pour les événements regroupés
+            }]);
+        } else {
+            // Si la carte est suffisamment zoomée, afficher tous les marqueurs individuellement
+            setZoomedOut(false);
+            setVisibleMarkers(markersData);
+        }
+    };
+
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
@@ -63,7 +108,7 @@ const MapScreen = () => {
             <MapView
                 style={styles.map}
                 initialRegion={region}
-                onRegionChangeComplete={setRegion}
+                onRegionChangeComplete={handleRegionChangeComplete} // Appel lors du changement de région
             >
                 {userLocation && (
                     <CustomMarker
@@ -81,39 +126,19 @@ const MapScreen = () => {
                     />
                 )}
 
-                <CustomMarker
-                    coordinate={{
-                        latitude: 49.44709008859785,
-                        longitude: 1.1042816721797788,
-                    }}
-                    title="Exo"
-                    description="Kpop"
-                    pinImage={LocationImagePin}
-                    height={35}
-                    width={35}
-                    onPress={() => handleMarkerPress({
-                        title: "Exo",
-                        description: "Heures : 17h",
-                        image: PopupImage,
-                    })}
-                />
-
-                <CustomMarker
-                    coordinate={{
-                        latitude: 49.442804165962286,
-                        longitude: 1.0926350343166913,
-                    }}
-                    title="Poab"
-                    description="Kpop"
-                    pinImage={LocationImagePin}
-                    height={35}
-                    width={35}
-                    onPress={() => handleMarkerPress({
-                        title: "Poab",
-                        description: "Heures : 18h",
-                        image: PopupImage,
-                    })}
-                />
+                {/* Afficher les marqueurs visibles (soit un groupe, soit plusieurs) */}
+                {visibleMarkers.map((marker, index) => (
+                    <CustomMarker
+                        key={index}
+                        coordinate={marker.coordinate}
+                        title={marker.title}
+                        description={marker.description}
+                        pinImage={LocationImagePin}
+                        height={35}
+                        width={35}
+                        onPress={() => handleMarkerPress(marker)}
+                    />
+                ))}
             </MapView>
 
             {selectedMarker && (
