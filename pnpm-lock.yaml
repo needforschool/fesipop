@@ -126,16 +126,16 @@ importers:
         version: 1.7.1(@babel/runtime@7.25.0)(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.3.3)(bufferutil@4.0.8)(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.3.3)(bufferutil@4.0.8)(react@18.3.1))(react@18.3.1)
+        version: 5.51.23(react@18.3.1)
       '@trpc/client':
         specifier: 'catalog:'
-        version: 10.45.2(@trpc/server@10.45.2)
+        version: 11.0.0-rc.477(@trpc/server@11.0.0-rc.477)
       '@trpc/react-query':
         specifier: 'catalog:'
-        version: 10.45.2(@tanstack/react-query@4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.3.3)(bufferutil@4.0.8)(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.0-rc.477(@tanstack/react-query@5.51.23(react@18.3.1))(@trpc/client@11.0.0-rc.477(@trpc/server@11.0.0-rc.477))(@trpc/server@11.0.0-rc.477)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 'catalog:'
-        version: 10.45.2
+        version: 11.0.0-rc.477
       expo:
         specifier: ~51.0.27
         version: 51.0.27(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)
@@ -586,7 +586,7 @@ importers:
         version: 7.35.0(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-3dfd5d9e-20240910(eslint@9.9.0(jiti@1.21.6))
+        version: 5.1.0-rc-d6cb4e77-20240911(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-turbo:
         specifier: ^2.1.1
         version: 2.1.1(eslint@9.9.0(jiti@1.21.6))
@@ -4464,8 +4464,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-react-hooks@5.1.0-rc-3dfd5d9e-20240910:
-    resolution: {integrity: sha512-bB2mPM2fKSgb+rrHtksYrawCribuatIBq8t1gZTyEwNbrWTDFc1H0r7FWZVgqOvR9n5hwOxF16KVXkgFwvGQMw==}
+  eslint-plugin-react-hooks@5.1.0-rc-d6cb4e77-20240911:
+    resolution: {integrity: sha512-bVg0IJv+ti3rSR6LSStSSaLSbEVX31gE9Id9SxvK+4fLHMXQHPakeusjipFpzgM1XvRSDqQPucxOhI2+i7KMNQ==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -12722,7 +12722,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-3dfd5d9e-20240910(eslint@9.9.0(jiti@1.21.6)):
+  eslint-plugin-react-hooks@5.1.0-rc-d6cb4e77-20240911(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
 
