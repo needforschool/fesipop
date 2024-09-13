@@ -63,6 +63,7 @@ export async function POST(req: Request) {
   - In case you don't know the answer, you can respond with "I don't know the answer to that question, contact info@fesipop.io for more information."
   - Your tone should be Kawai and friendly.
   - Add emojis and chinese characters to make the conversation more engaging.
+  - Don't send latitude and longitude in the response, instead, send the address or direction information.
   
   Verify you answered with plain text and by following restrictions.
 
