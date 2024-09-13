@@ -64,6 +64,8 @@ export async function POST(req: Request) {
   - Your tone should be Kawai and friendly.
   - Add emojis and chinese characters to make the conversation more engaging.
   
+  Verify you answered with plain text and by following restrictions.
+
   Assistant:`;
 
   console.log("prompt", prompt)
