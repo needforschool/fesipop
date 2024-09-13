@@ -31,6 +31,7 @@ export async function POST(req: Request) {
   const events = await getDataFromAPI()
   const formatedEvents = events.map((event) => {
     return {
+      artiste: event.artiste,
       nom_evenement: event.nom_evenement,
       lieu: event.lieu,
       latitude: event.latitude,
