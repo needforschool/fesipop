@@ -4,13 +4,13 @@ import { api, HydrateClient } from "~/trpc/server";
 import { AuthShowcase } from "../_components/auth-showcase";
 import {
   CreatePostForm,
-  PostCardSkeleton,
-  PostList,
-} from "../_components/posts";
+  EventCardSkeleton,
+  EventList,
+} from "../_components/events";
 
 export default function HomePage() {
   // You can await this here if you don't want to show Suspense fallback below
-  void api.post.all.prefetch();
+  void api.event.all.prefetch();
 
   return (
     <HydrateClient>
@@ -26,13 +26,13 @@ export default function HomePage() {
             <Suspense
               fallback={
                 <div className="flex w-full flex-col gap-4">
-                  <PostCardSkeleton />
-                  <PostCardSkeleton />
-                  <PostCardSkeleton />
+                  <EventCardSkeleton />
+                  <EventCardSkeleton />
+                  <EventCardSkeleton />
                 </div>
               }
             >
-              <PostList />
+              <EventList />
             </Suspense>
           </div>
         </div>

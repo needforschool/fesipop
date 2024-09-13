@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, ScrollView } from 'react-native';
 import EventCard from "../component/EventCard";
+import { api } from '~/utils/api';
 const backgroundImage = require('../../assets/icon.png');
 const groupImage = require('../../assets/eventimg.jpg');
 
 const EventScreen = () => {
+    const postQuery = api.post.all.useQuery();
+    const posts = postQuery.data;
+    console.log("posts", posts);
+
     return (
         <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
             <View style={styles.overlay}>

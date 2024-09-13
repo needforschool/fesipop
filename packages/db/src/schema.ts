@@ -1,6 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   integer,
+  numeric,
   pgTable,
   primaryKey,
   text,
@@ -11,25 +12,34 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const Post = pgTable("post", {
+export const Event = pgTable('event', {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
-  title: varchar("name", { length: 256 }).notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", {
-    mode: "date",
-    withTimezone: true,
-  }).$onUpdateFn(() => sql`now()`),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  startAt: timestamp('start_at').notNull(),
+  location_x: numeric('location_x').notNull(),
+  location_y: numeric('location_y').notNull(),
 });
 
-export const CreatePostSchema = createInsertSchema(Post, {
+export const CreateEventSchema = createInsertSchema(Event, {
   title: z.string().max(256),
-  content: z.string().max(256),
+  description: z.string().max(256),
+  startAt: z.date(),
+  location_x: z.number(),
+  location_y: z.number(),
 }).omit({
   id: true,
-  createdAt: true,
-  updatedAt: true,
 });
+
+export const Artist = pgTable('artist', {
+  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  genre: text('genre'),
+});
+
+export const ArtistRelations = relations(Artist, ({ many }) => ({
+  events: many(Event),
+}));
 
 export const User = pgTable("user", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
